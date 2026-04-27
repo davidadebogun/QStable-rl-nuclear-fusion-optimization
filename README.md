@@ -24,6 +24,9 @@ Worked thoroughly through GymTorax paper and sketching diagrams and then develop
 Testing/Error Handling: 
 While the GymTorax environment had already defined the physics function for the environment, getting more precise results requires taking into account the vertical displacement of the plasma which affects its stability. So eventually, had to derive a computation of vertical position. Also, the agents face multiple competing objectives, maximizing fusion power and maintinaing low disruption risk, in environment so needed to ensure they find a Pareto frontier where both goals are satisfied. 
 
+Future Improvements: 
+There could be further measures to quantify safety predictions while agents are navigating environment. Also, more robust and granular insight into the displacement and current of stability could prevent potential reward-hacking agents may be employing as this could ensure that agents are making smarter safety and reward decisions along each step.  
+
 
 ## 🚀 Quick Start
 
