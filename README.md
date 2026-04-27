@@ -1,6 +1,29 @@
 # Multi-Objective RL for Nuclear Fusion Optimization
 
-A reinforcement learning project for optimizing plasma shape control in nuclear fusion reactors using shape constraints and self-fixing mechanisms.
+Developed at Neo Hackathon 2025 (https://devpost.com/software/fusion-lab) 
+
+Problem Statement: 
+The climate crisis demands revolutionary solutions. Fusion energy could provide unlimited, clean power from seawater, with zero carbon emissions and no long-lived radioactive waste. But there is a catch: the biggest barrier to commercial fusion isn't building the reactor, it's controlling 100-million-degree plasma that can collapse in milliseconds. Traditional control systems struggle with plasma's chaotic, nonlinear behavior. We realized that reinforcement learning, could be the key to mastering plasma dynamics. This project uses RL for optimizing plasma shape control in nuclear fusion reactors using shape constraints and self-fixing mechanisms. 
+
+Solution Overview: 
+The Soft-Actor-Critic RL agent effectively learns from plasma simulation environment, leveraging TORAX which is Google Deepmind's tokamac physics engine. The SAC RL agent is compared to a PID agent (Proprotional-Integral-Derivative) industry standard and a Random agent in the gymnasium environment and performs 8x better than both agents in fusion power output (Q). 
+
+AI Integration: 
+Utilized GymTorax environment (https://arxiv.org/abs/2510.11283) along with Modal to train the agents on GPUs. Ran into difficulties trying to compress and parallelize the data for training as TORAX is too slow for online RL training. Ended up training the data one-time on TORAX and using that data for offline GPU RL. 
+
+Architecture/Design Decisions: 
+The system is structured as a modular pipeline consisting of a Next.js frontend, a Python-based API server, and a reinforcement learning optimization layer. The frontend provides an interactive interface for exploring simulation outputs, while the backend handles requests and interfaces with the RL agents and environment. Data flows from user inputs through the API into the optimization layer, where policies are evaluated and updated before results are returned for visualization.
+
+A key design decision was to separate the frontend and backend to allow independent iteration on the user interface and the optimization logic. This also makes it easier to scale or swap components, such as replacing the RL algorithm or extending the simulation environment. Streamlit is used as a complementary visualization tool for rapid experimentation and quick inspection of agent behavior and performance metrics.
+
+The system emphasizes modularity, with core functionality organized into reusable components (e.g., agents, utilities, and simulation environments). This structure supports experimentation with different optimization strategies and constraints without tightly coupling components.
+
+AI Help: 
+Worked thoroughly through GymTorax paper and sketching diagrams and then developed strategy with help of Claude. Used Cursor creating Next.js frontend and simulation local webpages. Tools helped speed up the process but were most helpful towards end after drawing on whiteboard the architecture for the agent flow. 
+
+Testing/Error Handling: 
+While the GymTorax environment had already defined the physics function for the environment, getting more precise results requires taking into account the vertical displacement of the plasma which affects its stability. So eventually, had to derive a computation of vertical position. Also, the agents face multiple competing objectives, maximizing fusion power and maintinaing low disruption risk, in environment so needed to ensure they find a Pareto frontier where both goals are satisfied. 
+
 
 ## 🚀 Quick Start
 
@@ -184,14 +207,5 @@ Core requirements:
 
 See `pyproject.toml` for complete list.
 
-## 🎓 Research Context
 
-This project explores multi-objective reinforcement learning for nuclear fusion plasma control, focusing on:
-- Safe exploration with hard constraints
-- Self-correcting control policies
-- Real-time constraint satisfaction
-- Interpretable safety mechanisms
 
-## 📝 License
-
-See project repository for license information.
